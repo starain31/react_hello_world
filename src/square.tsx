@@ -1,7 +1,7 @@
 import React from "react";
 
 type SquareProps = {
-    clickedBy : string;
+    clickedBy: string | null;
     squareNumber: number;
     handleClick: ({squareNumber}: { squareNumber: number }) => void;
 }
