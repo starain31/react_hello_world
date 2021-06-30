@@ -18,6 +18,7 @@ const createHandleClick = ({boardState, setBoardState, playerState, setPlayerSta
 const createRenderSquare = ({boardState, handleClick}: createRenderSquareParams) =>
     ({squareNumber}: renderSquareParam) =>
         <Square
+            key={squareNumber}
             squareNumber={squareNumber}
             clickedBy={boardState[squareNumber]}
             handleClick={handleClick}
@@ -52,29 +53,22 @@ export function Board() {
     const handleClick = createHandleClick({boardState, setBoardState, playerState, setPlayerState});
 
     const renderSquare = createRenderSquare({boardState, handleClick});
-    return (
-        <div>
-            {
-                calculateWinner(boardState) ?
-                    <div className="status"> Winner: {calculateWinner(boardState)}</div> :
-                    <div className="status">Current player: {playerState}</div>
-            }
+    return <div>
+        {
+            calculateWinner(boardState) ?
+                <div className="status"> Winner: {calculateWinner(boardState)}</div> :
+                <div className="status">Current player: {playerState}</div>
+        }
+        {
+            [0, 1, 2].map(row =>
+                <div key={row} className={`board-row`}>
+                    {
+                        [0, 1, 2].map(col => renderSquare({squareNumber: row * 3 + col}))
+                    }
+                </div>
+            )
+        }
 
-            <div className="board-row">
-                {renderSquare({squareNumber: 0})}
-                {renderSquare({squareNumber: 1})}
-                {renderSquare({squareNumber: 2})}
-            </div>
-            <div className="board-row">
-                {renderSquare({squareNumber: 3})}
-                {renderSquare({squareNumber: 4})}
-                {renderSquare({squareNumber: 5})}
-            </div>
-            <div className="board-row">
-                {renderSquare({squareNumber: 6})}
-                {renderSquare({squareNumber: 7})}
-                {renderSquare({squareNumber: 8})}
-            </div>
-        </div>
-    );
+
+    </div>;
 }
