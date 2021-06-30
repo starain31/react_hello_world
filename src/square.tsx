@@ -1,17 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 
 
-
-export function Square() {
-    const [isClicked, setIsClicked] = useState<boolean>(false);
+export function Square({clickedBy}: { clickedBy: string }) {
 
     function onClick() {
-        setIsClicked(!isClicked);
+        // setIsClicked(!isClicked);
     }
 
     return (
         <button className="square" onClick={onClick}>
-            {isClicked? 'X' : ''}
+            {clickedBy}
         </button>
     );
 }
